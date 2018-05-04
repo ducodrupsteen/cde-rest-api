@@ -3,3 +3,5 @@ dist
 /src/config/index.js
 node_modules
 package-lock.json
+
+heroku config:set DEV_MONGODB=mongodb://duco:1974EA2319@ds159509.mlab.com:59509/cde-v1

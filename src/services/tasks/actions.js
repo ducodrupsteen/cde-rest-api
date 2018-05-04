@@ -4,7 +4,7 @@ export default {
   getAllTasks() {
     return Task.find()
       .then(function retrievedTasks(tasksArray) {
-        return tasksArray 
+        return tasksArray
       })
   }
 }

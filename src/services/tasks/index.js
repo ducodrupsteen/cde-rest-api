@@ -1,4 +1,4 @@
-import { Router as router } from 'express' 
+import { Router as router } from 'express'
 import Task from '../../models/tasks'
 import actions from './actions.js'
 
@@ -10,7 +10,7 @@ export default function taskController({ config, log }) {
       .then(tasks => {
         log.info({ tasks })
         response.json({ tasks })
-      }) 
+      })
       .catch(err => {
         log.error({ err })
         response.json({ err })
