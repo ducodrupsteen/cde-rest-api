@@ -24,6 +24,6 @@ app.use('/v1', routes);
 
 // server
 app.server.listen(config.port);
-log.info(`Data provided on http://localhost:${config.port}/v1`)
+log.info(`Data provided on http://localhost:${process.env.PORT}/v1`)
 
 export default app
