@@ -11,7 +11,7 @@
 		"start": "NODE_ENV=production pm2 start dist --name express-rest-boilerplate",
 		"prestart": "npm run -s build",
 		"lint": "eslint src",
-		"preinstall": "npm instal pm2 -g"
+		"preinstall": "npm install pm2 -g"
 	},
 	"dependencies": {
 		"body-parser": "^1.17.2",
