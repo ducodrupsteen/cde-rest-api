@@ -29,8 +29,12 @@ export default function contentController({ config, log }){
       })
   })
 
-  content.get('/create', function(req, res){
+  content.post('/create', function(req, res){
     actions.insertContent(req.bodyParser.title,req.bodyParser.body)
+      .catch(err => {
+        res.json({ err })
+        log.info({ err });
+      )
   })
 
   content.get('/update/:_id', function(req, res){

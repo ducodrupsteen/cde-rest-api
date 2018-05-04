@@ -21,10 +21,9 @@ export default{
       title: title,
       body: body
     })
-
     cont.save(function(err, cont){
       if(err) log.info(err)
-      //saved
+      log.info(err)
     })
     return cont
   },
