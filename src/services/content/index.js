@@ -33,8 +33,8 @@ export default function contentController({ config, log }){
     actions.insertContent(req.bodyParser.title,req.bodyParser.body)
       .catch(err => {
         res.json({ err })
-        log.info({ err });
-      )
+        log.info({ err })
+      })
   })
 
   content.get('/update/:_id', function(req, res){
