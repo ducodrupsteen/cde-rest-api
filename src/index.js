@@ -23,7 +23,7 @@ app.use(middleware);
 app.use('/v1', routes);
 
 // server
-app.server.listen(process.env.PORT ||config.port);
+app.server.listen(process.env.PORT);
 // log.info(`Data provided on http://localhost:${process.env.PORT}/v1`)
 
 export default app
