@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import expressJwt from 'express-jwt'
 import config from '../config'
 
-const secret = 'yours3cr3t' 
+const secret = 'yours3cr3t'
 
 const authenticate = expressJwt({ secret })
 

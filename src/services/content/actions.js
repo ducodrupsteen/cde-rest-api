@@ -1,5 +1,4 @@
 import Content from '../../models/content'
-import bodyParses from 'body-parser'
 
 export default{
 
@@ -21,17 +20,12 @@ export default{
       title: title,
       body: body
     })
-    cont.save(function(err, cont){
-      if(err) log.info(err)
-      log.info(err)
-    })
-    return cont
+    return cont.save()
   },
 
   deleteContent(obj_id){
-    return Content.findById(obj_id, function(err, cont){
-      return cont
-    })
+    var cont = Content.findById(obj_id)
+    return cont.remove()
   }
 
 }

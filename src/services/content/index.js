@@ -30,7 +30,13 @@ export default function contentController({ config, log }){
   })
 
   content.post('/create', function(req, res){
-    actions.insertContent(req.bodyParser.title,req.bodyParser.body)
+    actions.insertContent(req.body.title,req.body.body)
+      .then( succes => {
+        res.json({
+          success: true,
+          message: 'Content is saved'
+        })
+      })
       .catch(err => {
         res.json({ err })
         log.info({ err })
@@ -42,17 +48,17 @@ export default function contentController({ config, log }){
   })
 
   content.get('/delete/:_id', function(req, res){
-    actions.deleteContent(req.params).remove(function(err, cont){
-      if (err) {
-        log.error(err)
-        res.json(err)
-      }else {
+    actions.deleteContent(req.params)
+      .then( succes => {
         res.json({
             succes: true,
             message: 'the content item has been removed'
         })
-      }
-    })
+      })
+      .catch(err => {
+        res.json({ err })
+        log.info({ err })
+      })
   })
 
   return content;
