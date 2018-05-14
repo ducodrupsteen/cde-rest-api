@@ -7,7 +7,7 @@ export default function initializeDatabaseConnectino(callback) {
   mongoose.Promise = global.Promise
 
   return new Promise((resolve, reject) => {
-    const db = mongoose.connect(config.mongoUrl, {
+    const db = mongoose.connect(mongoUrl, {
       useMongoClient: true
     })
     return resolve(db)
