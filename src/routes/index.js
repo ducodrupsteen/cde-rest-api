@@ -1,5 +1,5 @@
 import express from 'express';
-import config from '../config';
+// import config from '../config';
 import initializeDatabaseConnection from '../config/db';
 
 import tasks from '../services/tasks';
@@ -7,6 +7,12 @@ import content from '../services/content';
 import admins from '../services/admins';
 
 import log from '../log';
+
+const config = {
+  port: process.env.PORT,
+  mongoUrl: process.env.MONGODBURL
+  bodyLimit: process.env.BODYLIMIT
+}
 
 const router = express()
 
