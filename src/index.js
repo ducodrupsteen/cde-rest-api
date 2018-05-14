@@ -2,7 +2,7 @@ import http from 'http';
 import express from 'express';
 import bodyParser from 'body-parser';
 import passport from 'passport';
-import config from './config';
+// import config from './config';
 import routes from './routes';
 import log from './log';
 import middleware from './middlewares';
