@@ -9,15 +9,15 @@ import middleware from './middlewares';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const port = process.env.PORT || config.port
-const bodyLimit = process.env.BODYLIMIT || config.bodyLimit
+// const port = process.env.PORT || config.port
+// const bodyLimit = process.env.BODYLIMIT || config.bodyLimit
 const app = express();
 const LocalStrategy = require('passport-local').Strategy;
 
 app.server = http.createServer(app);
 
 app.use(bodyParser.json({
-  limit: bodyLimit
+  limit: process.env.BODYLIMIT
 }));
 
 app.use(middleware);
@@ -26,7 +26,7 @@ app.use(middleware);
 app.use('/v1', routes);
 
 // server
-app.server.listen(port);
-log.info(`Data provided on http://localhost:${port}/v1`)
+app.server.listen(process.env.PORT);
+log.info(`Data provided on http://localhost:${process.env.PORT}/v1`)
 
 export default app
