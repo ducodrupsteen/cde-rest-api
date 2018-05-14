@@ -10,7 +10,7 @@ import log from '../log';
 
 const config = {
   port: process.env.PORT,
-  mongoUrl: process.env.MONGODBURL
+  mongoUrl: process.env.MONGODBURL,
   bodyLimit: process.env.BODYLIMIT
 }
 
