@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 // import config from './index';
 
-const mongoUrl = process.env.MONGOURL
+const mongoUrl = process.env.MONGODBURL
 
 export default function initializeDatabaseConnectino(callback) {
   mongoose.Promise = global.Promise
