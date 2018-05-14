@@ -2,7 +2,7 @@ import { Router as router } from 'express'
 import Content from '../../models/content'
 import actions from './actions.js'
 
-export default function contentController({ config, log }){
+export default function contentController({ config, log, verify }){
   const content = router();
 
   content.get('/',function(req, res){
@@ -29,7 +29,7 @@ export default function contentController({ config, log }){
       })
   })
 
-  content.post('/create', function(req, res){
+  content.post('/create', verify.verifyToken, function(req, res){
     actions.insertContent(req.body.title,req.body.body)
       .then( succes => {
         res.json({
@@ -43,11 +43,11 @@ export default function contentController({ config, log }){
       })
   })
 
-  content.get('/update/:_id', function(req, res){
+  content.get('/update/:_id', verify.verifyToken, function(req, res){
 
   })
 
-  content.get('/delete/:_id', function(req, res){
+  content.get('/delete/:_id', verify.verifyToken, function(req, res){
     actions.deleteContent(req.params)
       .then( succes => {
         res.json({

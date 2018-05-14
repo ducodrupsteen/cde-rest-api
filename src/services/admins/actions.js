@@ -1,7 +1,8 @@
 import Admin from '../../models/admins'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-const { check, validationResult } = require('express-validator/check');
+import validator from 'express-validator'
+import { check, validationResult } from 'express-validator/check';
 
 
 export default{
@@ -18,8 +19,9 @@ export default{
     check('password','Password requires at least 7 characters').isLength({min: 7})
 
     const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        return res.status(422).json({
+    if (!errors.isEmpty()) {
+      console.log('an error occurred');
+        return res.json({
           errors: errors.mapped()
         });
       } else {
@@ -40,7 +42,7 @@ export default{
 
         return res.json({
           succes: true,
-          message: 'the admin has been saved'
+          message: 'the user has been saved'
         })
 
       }
@@ -67,13 +69,13 @@ export default{
         if (!user) {
           res.json({
             succes: false,
-            message: 'no user found'
+            message: 'Username and password do not match!'
           })
         }else {
           bcrypt.compare(password, user.password, function(error, isMatch) {
             if(err) console.log(err);
             if (isMatch) {
-              jwt.sign({ user }, 'mys3cr3t', (err, token) => {
+              jwt.sign({ user }, 'yourS3cr3t', (err, token) => {
                 res.json({
                   user,
                   token
@@ -82,7 +84,7 @@ export default{
             }else {
               res.json({
                 succes: false,
-                message: 'Wrong password'
+                message: 'Username and password do not match!'
               })
             }
         });
