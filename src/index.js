@@ -10,7 +10,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
 const port = process.env.PORT || config.port
-const bodyLimit = config.bodyLimit || process.env.BODYLIMIT
+const bodyLimit = process.env.BODYLIMIT || config.bodyLimit 
 const app = express();
 const LocalStrategy = require('passport-local').Strategy;
 
