@@ -3,8 +3,6 @@ import config from '../config';
 import initializeDatabaseConnection from '../config/db';
 
 import verify from '../middlewares/verify.js';
-
-import tasks from '../services/tasks';
 import content from '../services/content';
 import admins from '../services/admins';
 
@@ -25,10 +23,8 @@ initializeDatabaseConnection()
 
     const routes = [
       { route: '/users', routeController: admins},
-      { route: '/tasks', routeController: tasks },
       { route: '/content', routeController: content }
     ]
-
 
     routes.forEach(function addAllRoutes({ route, routeController }) {
       router.use(route, routeController(toPassToController))
