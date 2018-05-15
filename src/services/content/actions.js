@@ -1,29 +1,60 @@
-import Content from '../../models/content'
+import log from '../../log'
+import Page from '../../models/page'
+import Section from '../../models/section'
 
-export default{
+export default {
 
-  getContent(){
-    return Content.find()
-    .then( function retrieveContent(contentArr){
-      return contentArr
+  createNewPage(request, response) {
+    const { body } = request
+    const newPage = new Page(body)
+    newPage.created_by = '5afaa60db4ab8b3b03499d14'
+
+    newPage.save(error => {
+      if(error) {
+        log.error({error})
+        response.json({ error })
+      } else {
+        response.json({ message: 'Succesfully created page'})
+      }
     })
   },
 
-  getContentByID(obj_id){
-    return Content.findById(obj_id, function(err, content){
+  insertContent(request, response) {
+    const { body, params: { pageId } } = request
+    const newSection = new Section(body)
+
+    Page.findById(pageId)
+      .then(page => {
+        log.info({ page })
+        newSection.belongs_to = pageId
+        page.contents.push(newSection)
+        newSection.save(err => {
+          if(err) {
+            log.error({ err })
+            response.json({ message: 'Failed inserting content' })
+          } else {
+            response.json({ message: 'Succesfully inserted content' })
+            page.save()
+          }
+        })
+      })
+      .catch(err => log.error({ err }))
+  },
+
+  getContent() {
+    return Content.find()
+      .then(function retrieveContent(contentArr) {
+        return contentArr
+      })
+  },
+
+  getContentByID(obj_id) {
+    return Content.findById(obj_id, function(err, content) {
       return content
     })
   },
 
-  insertContent(title, body){
-    var cont = new Content({
-      title: title,
-      body: body
-    })
-    return cont.save()
-  },
-
-  deleteContent(obj_id){
+  deleteContent(obj_id) {
     var cont = Content.findById(obj_id)
     return cont.remove()
   }
