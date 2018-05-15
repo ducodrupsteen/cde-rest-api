@@ -38,25 +38,30 @@ export default {
           }
         })
       })
-      .catch(err => log.error({ err }))
   },
 
-  getContent() {
-    return Content.find()
-      .then(function retrieveContent(contentArr) {
-        return contentArr
+  getPage(request, response) {
+    Page.findById(request.params.pageId)
+      .then(page => response.json(page))
+  },
+
+  getPageSections(request, response) {
+    const { params: { pageId } } = request
+
+    Section.find({belongs_to: pageId })
+      .then(sections => {
+        log.info({ sections })
+        response.json({ sections })
       })
   },
 
-  getContentByID(obj_id) {
-    return Content.findById(obj_id, function(err, content) {
-      return content
-    })
-  },
+  getSectionById(request, response) {
+    const { params: { sectionId }} = request
 
-  deleteContent(obj_id) {
-    var cont = Content.findById(obj_id)
-    return cont.remove()
+    Section.findById(sectionId)
+      .then(section => {
+        log.info(section)
+        response.json(section)
+      })
   }
-
 }
