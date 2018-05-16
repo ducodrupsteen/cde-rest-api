@@ -48,7 +48,7 @@ export default {
   getPageSections(request, response) {
     const { params: { pageId } } = request
 
-    Section.find({belongs_to: pageId })
+    Section.find({ belongs_to: pageId })
       .then(sections => {
         log.info({ sections })
         response.json({ sections })
@@ -63,5 +63,29 @@ export default {
         log.info(section)
         response.json(section)
       })
+  },
+
+  updateSection(request, response) {
+    const { body, params: { sectionId }} = request
+
+    Section.findById(sectionId)
+      .then((section) => {
+
+        const contents = section.contents
+
+          Object.keys(body)
+            .map((key) => {
+              if(Object.keys(contents).includes(key)) {
+                contents[key] = body[key]
+              }
+            })
+
+          log.info({ section })
+          Section.update({ _id: sectionId }, section)
+            .then(() => response.json({ message: 'Succesfully updated contents', contents}))
+            .catch(() => response.json({ message: 'Failed updating contents', contents}))
+
+      })
+
   }
 }

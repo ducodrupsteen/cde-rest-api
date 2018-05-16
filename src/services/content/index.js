@@ -6,7 +6,8 @@ const {
   createNewPage,
   getPageSections,
   getSectionById,
-  getPage
+  getPage,
+  updateSection
 } = actions
 
 export default function contentController({ verify }) {
@@ -17,6 +18,7 @@ export default function contentController({ verify }) {
   content.get('/:pageId', getPage)
   content.get('/:pageId/sections', getPageSections)
   content.get('/single/:sectionId', getSectionById)
+  content.put('/update/:sectionId', updateSection)
 
   return content;
 }
