@@ -1,66 +1,24 @@
 import { Router as router } from 'express'
-import Content from '../../models/content'
 import actions from './actions.js'
 
-export default function contentController({ config, log, verify }){
+const {
+  insertContent,
+  createNewPage,
+  getPageSections,
+  getSectionById,
+  getPage,
+  updateSection
+} = actions
+
+export default function contentController({ verify }) {
   const content = router();
 
-  content.get('/',function(req, res){
-    actions.getContent()
-      .then(content => {
-        log.info({ content })
-        res.json({ content })
-      })
-      .catch(err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
-
-  content.get('/get/:_id', function(req, res){
-    actions.getContentByID(req.params)
-      .then(singleContent => {
-        log.info({ singleContent })
-        res.json({ singleContent })
-      })
-      .catch(err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
-
-  content.post('/create', verify.verifyToken, function(req, res){
-    actions.insertContent(req.body.title,req.body.body)
-      .then( succes => {
-        res.json({
-          success: true,
-          message: 'Content is saved'
-        })
-      })
-      .catch(err => {
-        res.json({ err })
-        log.info({ err })
-      })
-  })
-
-  content.get('/update/:_id', verify.verifyToken, function(req, res){
-
-  })
-
-  content.get('/delete/:_id', verify.verifyToken, function(req, res){
-    actions.deleteContent(req.params)
-      .then( succes => {
-        res.json({
-            succes: true,
-            message: 'the content item has been removed'
-        })
-      })
-      .catch(err => {
-        res.json({ err })
-        log.info({ err })
-      })
-  })
+  content.post('/newpage', createNewPage)
+  content.post('/:pageId/newsection/', insertContent)
+  content.get('/:pageId', getPage)
+  content.get('/:pageId/sections', getPageSections)
+  content.get('/single/:sectionId', getSectionById)
+  content.put('/update/:sectionId', updateSection)
 
   return content;
-
 }

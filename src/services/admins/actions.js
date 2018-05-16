@@ -1,17 +1,15 @@
 import Admin from '../../models/admins'
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import validator from 'express-validator'
 import { check, validationResult } from 'express-validator/check';
+import log from '../../log'
 
+export default {
 
-export default{
-
-  registerAdmin(req, res){
-
-    var name = req.body.name
-    var password = req.body.password
-    var email = req.body.email
+  registerAdmin(req, res) {
+    const name = req.body.name
+    const password = req.body.password
+    const email = req.body.email
 
     check('name').isEmpty().withMessage('Name is required')
     check('email').isEmpty().withMessage('Email is required')
@@ -19,22 +17,25 @@ export default{
     check('password','Password requires at least 7 characters').isLength({min: 7})
 
     const errors = validationResult(req);
+
     if (!errors.isEmpty()) {
-      console.log('an error occurred');
+      log.info('an error occurred');
         return res.json({
           errors: errors.mapped()
         });
       } else {
 
-        var newAdmin = new Admin({
+        const newAdmin = new Admin({
           name: name,
           email: email,
           password: password
         })
 
-        bcrypt.genSalt(10, function(err, salt) {
-          bcrypt.hash(password, salt, function(err, hash) {
-            if (err) console.log(err);
+        bcrypt.genSalt(10, (err, salt) => {
+          bcrypt.hash(password, salt, (err, hash) => {
+            if (err) {
+              log.error(err);
+            }
             newAdmin.password = hash;
             newAdmin.save()
           });
@@ -48,10 +49,10 @@ export default{
       }
   },
 
-  loginAdmin(req, res){
+  loginAdmin(req, res) {
 
-    var email = req.body.email
-    var password = req.body.password
+    const email = req.body.email
+    const password = req.body.password
 
     check('email').isEmpty().withMessage('Email is required')
     check('email').isEmail().withMessage('This is not a valid email')
@@ -64,24 +65,28 @@ export default{
         errors: errors.mapped()
       });
     } else{
-      Admin.findOne({email: email}, function(err, user){
-        if(err) console.log(err);
+      Admin.findOne({email: email}, (err, user) => {
+        if(err) {
+          log.error(err);
+        }
         if (!user) {
           res.json({
             succes: false,
             message: 'Username and password do not match!'
           })
         }else {
-          bcrypt.compare(password, user.password, function(error, isMatch) {
-            if(err) console.log(err);
+          bcrypt.compare(password, user.password, function checkUserValidation(error, isMatch) {
+            if(err) {
+              log.error(err);
+            }
             if (isMatch) {
-              jwt.sign({ user }, 'yourS3cr3t', (err, token) => {
+              jwt.sign({ user }, 'yourS3cr3t', function signUserJWTToken(err, token) {
                 res.json({
                   user,
                   token
                 })
               })
-            }else {
+            } else {
               res.json({
                 succes: false,
                 message: 'Username and password do not match!'
@@ -91,9 +96,5 @@ export default{
       }
       })
     }
-
-
-
   }
-
 }
