@@ -1,12 +1,12 @@
 import express from 'express';
 import config from '../config';
 import initializeDatabaseConnection from '../config/db';
-
 import verify from '../middlewares/verify.js';
-
 import tasks from '../services/tasks';
 import content from '../services/content';
 import admins from '../services/admins';
+import ingredients from '../services/ingredients';
+import categories from '../services/categories';
 
 import log from '../log';
 
@@ -26,7 +26,9 @@ initializeDatabaseConnection()
     const routes = [
       { route: '/users', routeController: admins},
       { route: '/tasks', routeController: tasks },
-      { route: '/content', routeController: content }
+      { route: '/content', routeController: content },
+      { route: '/ingredients', routeController: ingredients },
+      { route: '/categories', routeController: categories}
     ]
 
 
