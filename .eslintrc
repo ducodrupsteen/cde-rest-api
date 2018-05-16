@@ -1,11 +1,13 @@
 {
   "parser": "babel-eslint",
   "env": {
-    "node": 2
+    "node": true,
+    "es6": true
   },
   "globals": {
     "suite": true,
-    "test": true
+    "test": true,
+    "node": true
   },
   "rules": {
     "brace-style": [2, "1tbs", {
