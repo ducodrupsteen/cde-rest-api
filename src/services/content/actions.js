@@ -70,20 +70,19 @@ export default {
 
     Section.findById(sectionId)
       .then((section) => {
-
         const contents = section.contents
 
-          Object.keys(body)
-            .map((key) => {
-              if(Object.keys(contents).includes(key)) {
-                contents[key] = body[key]
-              }
-            })
+        Object.keys(body)
+          .map((key) => {
+            if(Object.keys(contents).includes(key)) {
+              contents[key] = body[key]
+            }
+          })
 
-          log.info({ section })
-          Section.update({ _id: sectionId }, section)
-            .then(() => response.json({ message: 'Succesfully updated contents', contents}))
-            .catch(() => response.json({ message: 'Failed updating contents', contents}))
+        log.info({ section })
+        Section.update({ _id: sectionId }, section)
+          .then(() => response.json({ message: 'Succesfully updated contents', section }))
+          .catch(() => response.json({ message: 'Failed updating contents', section }))
 
       })
 
