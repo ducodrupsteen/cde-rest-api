@@ -6,11 +6,7 @@ import tasks from '../services/tasks';
 import content from '../services/content';
 import admins from '../services/admins';
 import ingredients from '../services/ingredients';
-<<<<<<< HEAD
 import categories from '../services/categories'
-=======
-import categories from '../services/categories';
->>>>>>> branchDuco
 
 import log from '../log';
 
