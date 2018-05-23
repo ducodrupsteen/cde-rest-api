@@ -10,7 +10,10 @@ const ingredientSchema = new Schema ({
   },
   messurement: {
     unit: 'string',
-    amount: []
+    amount: {
+      type: Array,
+      default: []
+    }
   }
   },{
     timestamps: true

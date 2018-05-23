@@ -5,7 +5,7 @@ export default {
 
   getAllIngredients() {
     return Ingredients.find()
-    .populate({path: 'category'})
+    .populate({path: 'category', select: "name"})
       .then( function retrieveIngredients(ingriedentArr) {
         return ingriedentArr
       })
@@ -42,6 +42,21 @@ export default {
       .populate({
         path: 'items',
 
+      })
+  },
+
+  updateIngredient(body) {
+    return Ingredients.findOneAndUpdate({ _id: body.ing_id }, 
+      {
+        name: body.name,
+        category: body.category,
+        messurement: {
+          unit: body.unit, 
+          amount: body.amount
+        },
+      },{
+        new: true,
+        upsert: true
       })
   }
 }

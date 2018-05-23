@@ -50,5 +50,25 @@ export default function ingredientsController({ config, log, verify }) {
       })
   })
 
+  ingredient.put('/update', function(req, res) {
+    actions.updateIngredient(req.body)
+      .then( result => {
+        res.json({
+          succes: true,
+          message: "The ingredient has been updated",
+          result
+        })
+        log.info({
+          succes: true,
+          message: "The ingredient has been updated",
+          result
+        })
+      })
+      .catch( err => {
+        log.error({ err })
+        res.json({ err })
+      })
+  })
+
   return ingredient
 }
