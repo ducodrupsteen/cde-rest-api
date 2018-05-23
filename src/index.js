@@ -17,8 +17,6 @@ app.use(bodyParser.json({
 
 app.use(middleware);
 
-// app.use(validator);
-
 // routes
 app.use('/v1', routes);
 

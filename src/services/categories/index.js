@@ -19,14 +19,16 @@ export default function categoriesController({ config, log, verify }) {
 
   cat.post('/create',function(req, res){
     actions.insertCategory(req.body)
-      .then( succes => {
+      .then( result => {
         res.json({
           succes: true,
-          message: 'the category has been saved'
+          message: 'the category has been saved',
+          result
         })
         log.info({
           succes: true,
-          message: 'the category has been saved'
+          message: 'the category has been saved',
+          result
         })
       })
       .catch( err => {
@@ -36,13 +38,18 @@ export default function categoriesController({ config, log, verify }) {
   })
 
   cat.put('/update', function(req, res){
-    actions.insertIngredientToCategory(req.body)
-      .then( succes => {
+    actions.updateCategoryItems(req.body)
+      .then( result => {
         res.json({
           succes: true,
-          message: 'the cat has been updated'
+          message: 'the cat has been updated',
+          result
          })
-        log.info({ succes })
+        log.info({ 
+          succes: true,
+          message: 'the cat has been updated',
+          result 
+        })
       })
       .catch( err => {
         log.error({ err })

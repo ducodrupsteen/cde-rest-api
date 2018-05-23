@@ -5,32 +5,43 @@ export default {
 
   getAllIngredients() {
     return Ingredients.find()
+    .populate({path: 'category'})
       .then( function retrieveIngredients(ingriedentArr) {
         return ingriedentArr
       })
   },
 
   insertIngredient(body) {
-    const cat = Categories.findOne({ name: body.category_name })
     const newIngredient = new Ingredients
 
     newIngredient.name = body.name;
-    newIngredient.category = body.category;
+    newIngredient.category = body.cat_id;
     newIngredient.messurement.unit = body.unit;
-    newIngredient.messurement.amount = body.amount;
 
-    return newIngredient.save( function(err){
+    for(const i in body.amount) {
+      const am = body.amount[i]
+      newIngredient.messurement.amount.push(am)
+    }
+
+    return newIngredient.save( function(err, newIngredient){
       if(err) {
-        log.error(err)
+        return err;
       }
-      
-      cat.items = newIngredient._id
-      cat.save;
+
+      Categories.findOneAndUpdate({_id: body.cat_id}, {$push: {items: newIngredient._id}},function (err) {
+        if(err) {
+          return err
+        }
+      })
+
     })
   },
 
   getCategorizedIngredients() {
-    return Ingredients.find().populate('Categories')
+    return Categories.find()
+      .populate({
+        path: 'items',
 
+      })
   }
 }

@@ -1,19 +1,23 @@
 import Categories from '../../models/categories'
 import Ingredients from '../../models/ingredients'
-export default{
+export default {
 
-  getAllCategories(){
-    return Categories.find().populate('Ingredients')
+  getAllCategories() {
+    return Categories.find()
+      .populate({
+        path: 'items',
+        select: 'name messurement'
+      })
   },
 
-  insertCategory(body){
-    //save function
+  insertCategory(body) {
+    const newCat = new Categories;
+    newCat.name = body.name;
+    return newCat.save()
   },
 
-  insertIngredientToCategory(body){
-    // const ing = Ingredients.findOne({ name: body.ingName })
-
+  updateCategoryItems(body) {
     return Categories.findOneAndUpdate({ name: body.catName }, {$push: {items: body.ing_id}})
+  },
 
-  }
 }

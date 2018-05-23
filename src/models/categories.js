@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
+import Ingredients from './ingredients'
 
-const objectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema
 
 const categorySchema = new Schema({
@@ -9,7 +9,7 @@ const categorySchema = new Schema({
     required: true,
   },
   items: [{
-    type: objectId,
+    type: Schema.Types.ObjectId,
     ref: 'Ingredients'
   }]
 },

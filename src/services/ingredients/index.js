@@ -30,16 +30,18 @@ export default function ingredientsController({ config, log, verify }) {
   })
 
   ingredient.post('/create', function(req, res) {
-    log.info(req.body)
+    // log.info(req.body)
     actions.insertIngredient(req.body)
-      .then( succes => {
+      .then( result => {
         log.info({
           succes: true,
-          message: 'The item has been saved'
+          message: 'The item has been saved',
+          result
         })
         res.json({
           succes: true,
-          message: 'The item has been saved'
+          message: 'The item has been saved',
+          result
         })
       })
       .catch( err => {
