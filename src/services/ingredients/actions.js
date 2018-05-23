@@ -46,17 +46,15 @@ export default {
   },
 
   updateIngredient(body) {
-    return Ingredients.findOneAndUpdate({ _id: body.ing_id }, 
-      {
-        name: body.name,
-        category: body.category,
-        messurement: {
-          unit: body.unit, 
-          amount: body.amount
-        },
-      },{
-        new: true,
-        upsert: true
-      })
+    const objForUpdate = {}
+    
+    for (const key in body) {
+      if (body.hasOwnProperty(key)) {
+        objForUpdate[key] = body[key]
+      }
+    }
+    
+    return Ingredients.findOneAndUpdate({ _id: body.ing_id }, { $set: objForUpdate}, {upsert: true, new: true})
+    
   }
 }
