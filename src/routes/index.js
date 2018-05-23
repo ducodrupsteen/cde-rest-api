@@ -25,8 +25,8 @@ initializeDatabaseConnection()
     const routes = [
       { route: '/users', routeController: admins},
       { route: '/content', routeController: content },
-      { route: '/ingredients', routeController: ingredients },
-      { route: '/categories', routeController: categories}
+      { route: '/campaign/ingredients', routeController: ingredients },
+      { route: '/campaign/categories', routeController: categories}
     ]
 
 
