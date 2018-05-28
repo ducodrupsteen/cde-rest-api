@@ -46,7 +46,7 @@ export default {
   },
 
   getPages(request, response) {
-    Page.find()
+    Page.find({})
       .then(pages => response.json(pages))
   },
 
