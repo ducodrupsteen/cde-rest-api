@@ -1,74 +1,20 @@
 import { Router as router } from 'express'
-import Ingredients from '../../models/ingredients'
 import actions from './actions.js'
 
-export default function ingredientsController({ config, log, verify }) {
+const {
+  getAllIngredients,
+  insertIngredient,
+  updateIngredient,
+  deleteIngredient
+} = actions
+
+export default function ingredientsController({ verify }) {
   const ingredient = router()
 
-  ingredient.get('/', function(req, res) {
-    actions.getAllIngredients()
-      .then( ingredients => {
-        log.info({ ingredients })
-        res.json({ ingredients })
-      })
-      .catch( err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
-
-  ingredient.get('/categorized', function(req, res) {
-    actions.getCategorizedIngredients()
-      .then( categories => {
-        log.info({ categories })
-        res.send({ categories })
-      })
-      .catch( err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
-
-  ingredient.post('/create', function(req, res) {
-    // log.info(req.body)
-    actions.insertIngredient(req.body)
-      .then( result => {
-        log.info({
-          succes: true,
-          message: 'The item has been saved',
-          result
-        })
-        res.json({
-          succes: true,
-          message: 'The item has been saved',
-          result
-        })
-      })
-      .catch( err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
-
-  ingredient.put('/update', function(req, res) {
-    actions.updateIngredient(req.body)
-      .then( result => {
-        res.json({
-          succes: true,
-          message: "The ingredient has been updated",
-          result
-        })
-        log.info({
-          succes: true,
-          message: "The ingredient has been updated",
-          result
-        })
-      })
-      .catch( err => {
-        log.error({ err })
-        res.json({ err })
-      })
-  })
+  ingredient.get('/', getAllIngredients)
+  ingredient.post('/create', insertIngredient)
+  ingredient.put('/update', updateIngredient)
+  ingredient.delete('/delete', deleteIngredient)
 
   return ingredient
 }

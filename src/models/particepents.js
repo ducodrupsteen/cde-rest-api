@@ -8,17 +8,17 @@ const ParticepentsSchema = new Schema({
         required: true
     },
     email: {
-        type: string,
+        type: 'string',
         required:true
     },
     hasVoted: {
         type: 'boolean',
         default: false
     },
-    recipe_id: {
+    recipeId: {
         type: Schema.Types.ObjectId,
         ref: 'Recipe'
     }
 })
 
-export default mongoose.model('Particepent', ParticepentsSchema)
+export default mongoose.model('Particepents', ParticepentsSchema)

@@ -41,7 +41,7 @@ export default {
   },
 
   getPage(request, response) {
-    Page.findById(request.params.pageId) 
+    Page.findById(request.params.pageId)
       .then(page => response.json(page))
   },
 

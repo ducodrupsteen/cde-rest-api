@@ -11,9 +11,11 @@ const RecipeSchema = new Schema ({
         type: 'string',
         required: false
     },
-    ingredients: [{
-        ingredient: 'string'
-    }]
-}) 
+    particepent: {
+        type: Schema.Types.ObjectId,
+        ref: 'Particepents'
+    },
+    ingredients: []
+})
 
 export default mongoose.model('Recipe', RecipeSchema);
