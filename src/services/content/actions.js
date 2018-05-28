@@ -45,6 +45,11 @@ export default {
       .then(page => response.json(page))
   },
 
+  getPages(request, response) {
+    Page.find()
+      .then(pages => response.json(pages))
+  },
+
   getPageSections(request, response) {
     const { params: { pageId } } = request
 

@@ -7,7 +7,8 @@ const {
   getPageSections,
   getSectionById,
   getPage,
-  updateSection
+  updateSection,
+  getPages
 } = actions
 
 export default function contentController({ verify }) {
@@ -19,6 +20,7 @@ export default function contentController({ verify }) {
   content.get('/:pageId/sections', getPageSections)
   content.get('/single/:sectionId', getSectionById)
   content.put('/update/:sectionId', updateSection)
+  content.get('/pages', getPages)
 
   return content;
 }
