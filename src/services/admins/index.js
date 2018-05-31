@@ -11,7 +11,6 @@ export default function adminController() {
   const admins = router()
 
   admins.post('/register', registerAdmin)
-
   admins.post('/login', loginAdmin)
 
   return admins

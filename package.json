@@ -11,7 +11,8 @@
 		"start": "NODE_ENV=production node dist/index.js",
 		"prestart": "npm run -s build",
 		"lint": "eslint src",
-		"preinstall": "ls"
+		"preinstall": "ls",
+		"publish": "git push heroku master; heroku open; heroku logs -t;"
 	},
 	"dependencies": {
 		"bcryptjs": "^2.4.3",

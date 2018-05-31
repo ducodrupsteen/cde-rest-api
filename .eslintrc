@@ -28,7 +28,7 @@
     "no-underscore-dangle": 0,
     "strict": 0,
     "no-shadow": 0,
-    "no-unused-vars": 1,
-    "comma-dangle": ["error", "never"],
+    "no-unused-vars": 0,
+    "comma-dangle": ["error", "never"]
   }
 }
