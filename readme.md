@@ -32,28 +32,28 @@ create: POST -  `https://cde-v1.herokuapp.com/v1/campaign/particepent/create`
     email: 'your@email.com',
 }
 ```
-## Recipeâ€™s:
+## Recipe’s:
 
 Create with existing participant: POST - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/create/[participant_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/create/[participant_id]`
 
 Create without existing participant: POST - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/create`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/create`
 
 Read single recipe: GET - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes`
 
 Read recipe by id: GET - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/[recipe_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/[recipe_id]`
 
 Like recipe: PUT - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/[participant_id]/like/[recipe_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/[participant_id]/like/[recipe_id]`
 
 Remove like from recipe: PUT - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/[participant_id]/dislike/[recipe_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/[participant_id]/dislike/[recipe_id]`
 
 Remove recipe *(Admin only)*: DELETE - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipe/[recipe_id]/delete`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/[recipe_id]/delete`
 
 ### Recipe Schema
 
