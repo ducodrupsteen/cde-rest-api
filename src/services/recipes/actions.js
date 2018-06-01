@@ -138,6 +138,8 @@ export default {
                         message: 'Your vote has been removed'
                     })
                 })
+            } else {
+                res.json({message: 'You have not voted yet'})
             }
         })
         .catch(err => {
