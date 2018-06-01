@@ -120,7 +120,7 @@ export default {
     upvoteRecipe(req, res){
         const params = req.params
 
-        Particepent.find(params.userId)
+        Particepent.findById(params.userId)
         .then(particepent => {
             if(!particepent.hasVoted) {
                 Recipe.findById(params.recipeId)
@@ -159,7 +159,7 @@ export default {
             if(particepent.hasVoted) {
                 Recipe.findById(params.recipeId)
                 .then(recipe => {
-                    const newCount = 1 - recipe.upvotes
+                    const newCount = recipe.upvotes - 1
 
                     recipe.upvotes = newCount
                     recipe.save()

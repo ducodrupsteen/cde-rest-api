@@ -9,7 +9,8 @@ const ParticepentsSchema = new Schema({
     },
     email: {
         type: 'string',
-        required:true
+        required: true,
+        unique: true
     },
     hasVoted: {
         type: 'boolean',
