@@ -12,6 +12,19 @@ export default {
       .then( categories => res.json(categories))
   },
 
+  getSingleCategory(req, res) {
+    const params = req.params
+
+    Categories.findById(params.categoryId)
+    .then( category => {
+      res.json(category)
+    })
+    .catch(err => {
+      log.error({ err })
+      res.json({message: 'An error occurred'})
+    })
+  },
+
   insertCategory(req, res) {
     const body = req.body
     const newCat = new Categories;
