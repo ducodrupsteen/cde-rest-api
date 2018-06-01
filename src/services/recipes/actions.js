@@ -32,6 +32,40 @@ export default {
     },
 
     createRecipe(req, res) {
+        const params = req.params
+        const body = req.body
+
+        Particepent.findById(params.userId)
+        .then(particepent => {
+            if(!particepent) {
+                res.json({message: 'No user found'})
+            } else if(particepent.recipeId !== '') {
+                res.json({message: 'You already created a recipe'})
+            } else {
+                const newRecipe = new Recipe
+
+                newRecipe.name = body.name
+                newRecipe.body = body.body
+                newRecipe.ingredients = body.ingredients
+                newRecipe.particepent = particepent._id
+                newRecipe.save()
+
+                particepent.recipeId = newRecipe._id
+                particepent.save()
+
+                res.json({
+                    succes: true,
+                    message: 'Your recipe is saved, do not forget to share it!'
+                })
+            }
+        })
+        .catch(err => {
+            log.error({ err })
+            res.json({message: 'An error occured'})
+        })
+    },
+
+    createRecipeAndUser(req, res) {
         const body = req.body
         const ingredients = body.ingredients
         const newRecipe = new Recipe
