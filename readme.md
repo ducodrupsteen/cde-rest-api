@@ -32,7 +32,7 @@ create: POST -  `https://cde-v1.herokuapp.com/v1/campaign/particepent/create`
     email: 'your@email.com',
 }
 ```
-## Recipe’s:
+## Recipeï¿½s:
 
 Create with existing participant: POST - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes/create/[participant_id]`
@@ -40,7 +40,7 @@ Create with existing participant: POST -
 Create without existing participant: POST - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes/create`
 
-Read single recipe: GET - 
+Read all recipe: GET - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes`
 
 Read recipe by id: GET - 

@@ -7,6 +7,7 @@ import admins from '../services/admins';
 import ingredients from '../services/ingredients';
 import categories from '../services/categories';
 import recipes from '../services/recipes';
+import particepents from '../services/particepents'
 
 import log from '../log';
 
@@ -28,7 +29,8 @@ initializeDatabaseConnection()
       { route: '/content', routeController: content },
       { route: '/campaign/ingredients', routeController: ingredients },
       { route: '/campaign/categories', routeController: categories},
-      { route: '/campaign/recipes', routeController: recipes}
+      { route: '/campaign/recipes', routeController: recipes},
+      { route: '/campaign/particepents', routeController: particepents }
     ]
 
 

@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { SchemaType } from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -15,7 +15,11 @@ const RecipeSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: 'Particepents'
     },
-    ingredients: {
+    items: {
+        type: Schema.Types.ObjectId,
+        ref: 'Ingredients'
+    },
+    upvotes: {
         type: 'number',
         default: 0
     }
