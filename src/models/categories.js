@@ -6,7 +6,7 @@ const Schema = mongoose.Schema
 const categorySchema = new Schema({
   name: {
     type: 'string',
-    required: true,
+    required: true
   },
   items: [{
     type: Schema.Types.ObjectId,

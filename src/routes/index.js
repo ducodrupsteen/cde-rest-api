@@ -1,5 +1,5 @@
 import express from 'express';
-// import config from '../config';
+import config from '../config';
 import initializeDatabaseConnection from '../config/db';
 import verify from '../middlewares/verify.js';
 import content from '../services/content';
@@ -10,11 +10,11 @@ import recipes from '../services/recipes';
 
 import log from '../log';
 
-const config = {
-  port: process.env.PORT,
-  mongoUrl: process.env.MONGODBURL,
-  bodyLimit: process.env.BODYLIMIT
-}
+// const config = {
+//   port: process.env.PORT,
+//   mongoUrl: process.env.MONGODBURL,
+//   bodyLimit: process.env.BODYLIMIT
+// }
 
 const router = express()
 
