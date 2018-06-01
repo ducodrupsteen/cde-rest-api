@@ -15,7 +15,10 @@ const RecipeSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: 'Particepents'
     },
-    ingredients: []
+    ingredients: {
+        type: 'number',
+        default: 0
+    }
 })
 
 export default mongoose.model('Recipe', RecipeSchema);
