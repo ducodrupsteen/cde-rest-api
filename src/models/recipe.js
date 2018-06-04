@@ -15,10 +15,7 @@ const RecipeSchema = new Schema ({
         type: Schema.Types.ObjectId,
         ref: 'Particepents'
     },
-    ingredients: {
-        type: Schema.Types.ObjectId,
-        ref: 'Ingredients'
-    },
+    ingredients: [],
     upvotes: {
         type: 'number',
         default: 0
