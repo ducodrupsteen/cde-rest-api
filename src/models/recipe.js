@@ -9,7 +9,8 @@ const RecipeSchema = new Schema ({
     },
     body: {
         type: 'string',
-        required: false
+        required: false,
+        max: 255
     },
     particepent: {
         type: Schema.Types.ObjectId,

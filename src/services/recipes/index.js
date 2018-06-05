@@ -7,8 +7,7 @@ const {
     createRecipeAndUser,
     removeRecipe,
     getSingleRecipe,
-    upvoteRecipe,
-    downvoteRecipe
+    upvoteRecipe
 } = actions
 
 export default function recipeController({ verify  }) {
@@ -18,8 +17,7 @@ export default function recipeController({ verify  }) {
     recipe.get('/:recipeId', getSingleRecipe)
     recipe.post('/create', createRecipeAndUser)
     recipe.post('/create/:userId', createRecipe)
-    recipe.put('/:userId/like/:recipeId', upvoteRecipe)
-    recipe.put('/:userId/dislike/:recipeId', downvoteRecipe)
+    recipe.put('/like/:recipeId', upvoteRecipe)
     recipe.delete('/:id/delete', removeRecipe)
 
     return recipe
