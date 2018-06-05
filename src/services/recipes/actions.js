@@ -21,8 +21,8 @@ export default {
         const params = req.params
 
         Recipe.findById(params.recipeId)
-        .then(recipe => res.json(recipe))
         .populate({path: 'particepent', select: 'fullName'})
+        .then(recipe => res.json(recipe))
         .catch(err => {
             log.error({ err })
             res.json({
