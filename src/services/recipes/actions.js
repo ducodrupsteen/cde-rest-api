@@ -22,6 +22,7 @@ export default {
 
         Recipe.findById(params.recipeId)
         .then(recipe => res.json(recipe))
+        .populate({path: 'particepent', select: 'fullName'})
         .catch(err => {
             log.error({ err })
             res.json({
