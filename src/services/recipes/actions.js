@@ -69,52 +69,33 @@ export default {
     createRecipeAndUser(req, res) {
         const body = req.body
         const ingredients = body.ingredients
-        const newRecipe = new Recipe
+        const newParticipant = new Particepent
 
-        newRecipe.name = body.name
-        newRecipe.body = body.body
-        newRecipe.ingredients = body.ingredients
+        newParticipant.fullName = body.userName
+        newParticipant.email = body.email
 
-        newRecipe.save( err => {
-            if( err ) {
-                log.error({ err })
-                res.json({
-                    succes: false,
-                    message: 'A problem occured while saving your recipe'
-                })
-            } else {
-                const newParticepent = new Particepent
+        newParticipant.save()
+        .then(particepent => {
+            const newRecipe = new Recipe
 
-                newParticepent.fullName = body.userName
-                newParticepent.email = body.email
-                newParticepent.recipeId = newRecipe._id
+            newRecipe.name = body.name
+            newRecipe.body = body.body
+            newRecipe.ingredients = body.ingredients
+            newRecipe.particepent = particepent._id
+            newRecipe.save()
 
-                newParticepent.save( err => {
-                    if( err ) {
-                        log.error({ err })
-                        res.json({
-                            succes: false,
-                            message: 'A problem occured while saving your recipe'
-                        })
-                    } else {
+            particepent.recipeId = newRecipe._id
+            particepent.save()
 
-                        Recipe.findOneAndUpdate({ _id: newRecipe._id}, {$set: {particepent: newParticepent._id}}, err => {
-                            if( err ) {
-                                log.error({ err })
-                                res.json({
-                                    succes: false,
-                                    message: 'A problem occured while saving your recipe'
-                                })
-                            }
-                        })
-
-                        res.json({
-                            succes: true,
-                            message: 'Your recipe has been saved! Dont forget to share it!'
-                        })
-                    }
-                })
-            }
+            res.json({
+                succes: true,
+                message: 'Your recipe has been saved',
+                newRecipe
+            })
+        })
+        .catch(err => {
+            log.error({ err })
+            res.json({ message: 'An error occurred' })
         })
     },
 
