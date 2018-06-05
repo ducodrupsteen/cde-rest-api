@@ -43,13 +43,13 @@ Create without existing participant: POST -
 Read all recipe: GET - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes`
 
-Read recipe by id: GET - 
+Read recipe by id: GET *edit* - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes/[recipe_id]`
 
 Like recipe: PUT - 
-`https://cde-v1.herokuapp.com/v1/campaign/recipes/[participant_id]/like/[recipe_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/recipes/like/[recipe_id]`
 
-Remove like from recipe: PUT - 
+Remove like from recipe: PUT *removed* - 
 `https://cde-v1.herokuapp.com/v1/campaign/recipes/[participant_id]/dislike/[recipe_id]`
 
 Remove recipe *(Admin only)*: DELETE - 
@@ -73,13 +73,13 @@ Create ingredient: POST -
 `https://cde-v1.herokuapp.com/v1/campaign/ingredients/create`
 
 Read all ingredients: GET - 
-`https://cde-v1.herokuapp.com/v1/campaign/ingredient`
+`https://cde-v1.herokuapp.com/v1/campaign/ingredients`
 
 Update ingredient: PUT - 
-`https://cde-v1.herokuapp.com/v1/campaign/ingredient/update/[ingredient_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/ingredients/update/[ingredient_id]`
 
 Delete ingredient: DELETE - 
-`https://cde-v1.herokuapp.com/v1/campaign/ingredient/delete/[ingredient_id]`
+`https://cde-v1.herokuapp.com/v1/campaign/ingredients/delete/[ingredient_id]`
 
 ### Ingredient Schema
 
