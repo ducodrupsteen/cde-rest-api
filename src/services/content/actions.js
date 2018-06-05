@@ -25,7 +25,6 @@ export default {
 
     Page.findById(pageId)
       .then(page => {
-        log.info({ page })
         newSection.belongs_to = pageId
         page.contents.push(newSection)
         newSection.save(err => {
@@ -55,7 +54,6 @@ export default {
 
     Section.find({ belongs_to: pageId })
       .then(sections => {
-        log.info({ sections })
         response.json({ sections })
       })
   },
@@ -65,7 +63,6 @@ export default {
 
     Section.findById(sectionId)
       .then(section => {
-        log.info(section)
         response.json(section)
       })
   },

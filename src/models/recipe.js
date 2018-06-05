@@ -9,16 +9,14 @@ const RecipeSchema = new Schema ({
     },
     body: {
         type: 'string',
-        required: false
+        required: false,
+        max: 255
     },
     particepent: {
         type: Schema.Types.ObjectId,
         ref: 'Particepents'
     },
-    items: {
-        type: Schema.Types.ObjectId,
-        ref: 'Ingredients'
-    },
+    ingredients: [],
     upvotes: {
         type: 'number',
         default: 0
