@@ -14,7 +14,7 @@ export default function ingredientsController({ verify }) {
   ingredient.get('/', getAllIngredients)
   ingredient.post('/create', insertIngredient)
   ingredient.put('/update', updateIngredient)
-  ingredient.delete('/delete', deleteIngredient)
+  ingredient.delete('/delete/:ingId', deleteIngredient)
 
   return ingredient
 }
