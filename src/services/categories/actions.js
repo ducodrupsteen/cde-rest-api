@@ -5,11 +5,9 @@ export default {
 
   getAllCategories(req, res) {
     return Categories.find()
-      .populate({
-        path: 'items',
-        select: 'name messurement'
-      })
-      .then( categories => res.json(categories))
+    .populate('items','name messurement',null,{sort: {'name':1}})
+    .sort({field: 'asc', name: '1'})
+    .then( categories => res.json(categories))
   },
 
   getSingleCategory(req, res) {

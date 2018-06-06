@@ -74,17 +74,15 @@ export default {
 
   deleteIngredient(req, res) {
     const body = req.body
+    const params = req.params
 
-    Ingredients.findByIdAndRemove({ _id: body.id }, err =>{
-      if( err ) {
-        log.error({ err })
-        res.json({ err })
-      } else {
-        res.json({
-          succes: true,
-          message: 'The ingredient has been deleted'
-        })
-      }
+    Ingredients.findByIdAndRemove(params.ingId)
+    .then(ingredient => {
+      Categories.findOneAndUpdate({_id: ingredient.category}, {$pull: {ingredients: ingredient._id}})
+    })
+    .catch(err => {
+      log.error({ err })
+      res.json({ message: 'The ingredient has been removed and category has been updated'})
     })
   }
 }
