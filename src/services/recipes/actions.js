@@ -75,47 +75,47 @@ export default {
         newRecipe.body = body.body
         newRecipe.ingredients = body.ingredients
 
-        newRecipe.save( err => {
-            if( err ) {
-                log.error({ err })
-                res.json({
-                    succes: false,
-                    message: 'A problem occured while saving your recipe'
-                })
+        Particepent.find({})
+          .then(function checkParticipentEmailsForExistence(particepents) {
+            const emails = particepents.map(particepent => particepent.email)
+            const doesEmailExcist = (emails.indexOf(body.email) > -1)
+            return doesEmailExcist
+          })
+          .then(function saveRecipeToDatabase(emailExcists) {
+            if(emailExcists) {
+              res.json({
+                succes: false,
+                message: 'A problem occured while saving your recipe, this particepent already excists.'
+              })
             } else {
-                const newParticepent = new Particepent
+              newRecipe.save(err => {
+                  if(err) return err
+                  const newParticepent = new Particepent
 
-                newParticepent.fullName = body.userName
-                newParticepent.email = body.email
-                newParticepent.recipeId = newRecipe._id
+                  newParticepent.fullName = body.userName
+                  newParticepent.email = body.email
+                  newParticepent.recipeId = newRecipe._id
 
-                newParticepent.save( err => {
-                    if( err ) {
-                        log.error({ err })
+                  newParticepent.save( err => {
+                    Recipe.findOneAndUpdate({ _id: newRecipe._id}, {$set: {particepent: newParticepent._id}})
+                      .then(function isSavedSuccesfully() {
                         res.json({
-                            succes: false,
-                            message: 'A problem occured while saving your recipe'
+                          succes: true,
+                          message: 'Your recipe has been saved! Dont forget to share it!',
+                          newRecipeId: newRecipe._id
                         })
-                    } else {
-
-                        Recipe.findOneAndUpdate({ _id: newRecipe._id}, {$set: {particepent: newParticepent._id}}, err => {
-                            if( err ) {
-                                log.error({ err })
-                                res.json({
-                                    succes: false,
-                                    message: 'A problem occured while saving your recipe'
-                                })
-                            }
-                        })
-
-                        res.json({
-                            succes: true,
-                            message: 'Your recipe has been saved! Dont forget to share it!'
-                        })
-                    }
-                })
+                      }).catch(err => err )
+                    })
+              })
             }
-        })
+          })
+          .catch(function handleError(error) {
+            res.json({
+              error,
+              succes: false,
+              message: 'There has been an error'
+            })
+          })
     },
 
     upvoteRecipe(req, res){
