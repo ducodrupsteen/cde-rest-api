@@ -20,6 +20,12 @@ app.use(middleware);
 // routes
 app.use('/v1', routes);
 
+
+app.use('/', (req, res) => {
+	res.json({
+		message: 'online'
+	})
+})
 // server
 app.server.listen(config.port);
 log.info(`Data provided on http://localhost:${config.port}/v1`)
