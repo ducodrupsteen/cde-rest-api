@@ -16,6 +16,10 @@ const ParticepentsSchema = new Schema({
         type: 'boolean',
         default: false
     },
+    votedFor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Recipe'
+    },
     recipeId: {
         type: Schema.Types.ObjectId,
         ref: 'Recipe'

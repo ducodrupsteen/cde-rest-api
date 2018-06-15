@@ -121,30 +121,17 @@ export default {
     upvoteRecipe(req, res){
         const params = req.params
 
-        Particepent.findById(params.userId)
-        .then(particepent => {
-            if(!particepent.hasVoted) {
-                Recipe.findById(params.recipeId)
-                .then(recipe => {
-                    const newCount = recipe.upvotes + 1
+        Recipe.findById(params.recipeId)
+        .then(recipe => {
+            const newCount = recipe.upvotes + 1
 
-                    recipe.upvotes = newCount
-                    recipe.save()
+            recipe.upvotes = newCount
+            recipe.save()
 
-                    particepent.hasVoted = true
-                    particepent.save()
-
-                    res.json({
-                        succes: true,
-                        message: 'Your vote het been added'
-                    })
-                })
-            } else {
-                res.json({
-                    succes: true,
-                    message: 'You already brought out a vote'
-                })
-            }
+            res.json({
+                succes: true,
+                message: 'Your vote het been added'
+            })
         })
         .catch(err => {
             log.error({ err })
@@ -152,36 +139,36 @@ export default {
         })
     },
 
-    downvoteRecipe(req, res) {
-        const params = req.params
+    // downvoteRecipe(req, res) {
+    //     const params = req.params
 
-        Particepent.findById(params.userId)
-        .then(particepent => {
-            if(particepent.hasVoted) {
-                Recipe.findById(params.recipeId)
-                .then(recipe => {
-                    const newCount = recipe.upvotes - 1
+    //     Particepent.findById(params.userId)
+    //     .then(particepent => {
+    //         if(particepent.hasVoted) {
+    //             Recipe.findById(params.recipeId)
+    //             .then(recipe => {
+    //                 const newCount = recipe.upvotes - 1
 
-                    recipe.upvotes = newCount
-                    recipe.save()
+    //                 recipe.upvotes = newCount
+    //                 recipe.save()
 
-                    particepent.hasVoted = false
-                    particepent.save()
+    //                 particepent.hasVoted = false
+    //                 particepent.save()
 
-                    res.json({
-                        succes: true,
-                        message: 'Your vote has been removed'
-                    })
-                })
-            } else {
-                res.json({message: 'You have not voted yet'})
-            }
-        })
-        .catch(err => {
-            log.error({ err })
-            res.json({message: 'An error occurred'})
-        })
-    },
+    //                 res.json({
+    //                     succes: true,
+    //                     message: 'Your vote has been removed'
+    //                 })
+    //             })
+    //         } else {
+    //             res.json({message: 'You have not voted yet'})
+    //         }
+    //     })
+    //     .catch(err => {
+    //         log.error({ err })
+    //         res.json({message: 'An error occurred'})
+    //     })
+    // },
 
     removeRecipe(req, res) {
         Recipe.findByIdAndRemove({ _id: req.params.id}, err => {
