@@ -1,7 +1,6 @@
 import express from 'express';
 import config from '../config';
 import initializeDatabaseConnection from '../config/db';
-import verify from '../middlewares/verify.js';
 import content from '../services/content';
 import admins from '../services/admins';
 import ingredients from '../services/ingredients';
@@ -22,7 +21,7 @@ const router = express()
 initializeDatabaseConnection()
   .then(function getDatabaseVariable(db) {
 
-    const toPassToController = { db, config, log, verify }
+    const toPassToController = { db, config, log }
 
     const routes = [
       { route: '/users', routeController: admins},
