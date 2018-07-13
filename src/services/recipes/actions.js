@@ -18,52 +18,52 @@ export default {
     },
 
     getSingleRecipe(req, res) {
-        const params = req.params
+      const params = req.params
 
-        Recipe.findById(params.recipeId)
-        .populate({path: 'particepent', select: 'fullName'})
-        .then(recipe => res.json(recipe))
-        .catch(err => {
-            log.error({ err })
-            res.json({
-                succes: false,
-                message: 'An error occurred'
-            })
+      Recipe.findById(params.recipeId)
+      .populate({path: 'particepent', select: 'fullName'})
+      .then(recipe => res.json(recipe))
+      .catch(err => {
+        log.error({ err })
+        res.json({
+          succes: false,
+          message: 'An error occurred'
         })
+      })
     },
 
     createRecipe(req, res) {
-        const params = req.params
-        const body = req.body
+      const params = req.params
+      const body = req.body
 
-        Particepent.findById(params.userId)
-        .then(particepent => {
-            if(!particepent) {
-                res.json({message: 'No user found'})
-            } else if(particepent.recipeId !== '') {
-                res.json({message: 'You already created a recipe'})
-            } else {
-                const newRecipe = new Recipe
+      Particepent.findById(params.userId)
+      .then(particepent => {
+        if(!particepent) {
+            res.json({message: 'No user found'})
+        } else if(particepent.recipeId !== '') {
+            res.json({message: 'Je hebt al een recept gemaakt'})
+        } else {
+          const newRecipe = new Recipe
 
-                newRecipe.name = body.name
-                newRecipe.body = body.body
-                newRecipe.ingredients = body.ingredients
-                newRecipe.particepent = particepent._id
-                newRecipe.save()
+          newRecipe.name = body.name
+          newRecipe.body = body.body
+          newRecipe.ingredients = body.ingredients
+          newRecipe.particepent = particepent._id
+          newRecipe.save()
 
-                particepent.recipeId = newRecipe._id
-                particepent.save()
+          particepent.recipeId = newRecipe._id
+          particepent.save()
 
-                res.json({
-                    succes: true,
-                    message: 'Your recipe is saved, do not forget to share it!'
-                })
-            }
-        })
-        .catch(err => {
-            log.error({ err })
-            res.json({message: 'An error occured'})
-        })
+          res.json({
+            succes: true,
+            message: 'Jou recept is opgeslagen, vergeet het niet te delen!'
+          })
+        }
+      })
+      .catch(err => {
+        log.error({ err })
+        res.json({message: 'Er is een error opgetreden bij het uploaden van jou recept'})
+      })
     },
 
     createRecipeAndUser(req, res) {
@@ -74,29 +74,47 @@ export default {
         newParticipant.fullName = body.userName
         newParticipant.email = body.email
 
-        newParticipant.save()
-        .then(particepent => {
-            const newRecipe = new Recipe
+        Particepent.find({})
+          .then(function checkParticipentEmailsForExistence(particepents) {
+            const emails = particepents.map(particepent => particepent.email)
+            const doesEmailExcist = (emails.indexOf(body.email) > -1)
+            return doesEmailExcist
+          })
+          .then(function saveRecipeToDatabase(emailExcists) {
+            if(emailExcists) {
+              res.json({
+                succes: false,
+                message: 'Er is een probleem opgetreden bij het opslaan van jou recept, deze deelnemer bestaat al'
+              })
+            } else {
+              newRecipe.save(err => {
+                  if(err) return err
+                  const newParticepent = new Particepent
 
-            newRecipe.name = body.name
-            newRecipe.body = body.body
-            newRecipe.ingredients = body.ingredients
-            newRecipe.particepent = particepent._id
-            newRecipe.save()
+                  newParticepent.fullName = body.userName
+                  newParticepent.email = body.email
+                  newParticepent.recipeId = newRecipe._id
 
-            particepent.recipeId = newRecipe._id
-            particepent.save()
-
+                  newParticepent.save( err => {
+                    Recipe.findOneAndUpdate({ _id: newRecipe._id}, {$set: {particepent: newParticepent._id}})
+                      .then(function isSavedSuccesfully() {
+                        res.json({
+                          succes: true,
+                          message: 'Jou recept is opgeslagen, vergeet je het niet te delen!',
+                          newRecipeId: newRecipe._id
+                        })
+                      }).catch(err => err )
+                    })
+              })
+            }
+          })
+          .catch(function handleError(error) {
             res.json({
-                succes: true,
-                message: 'Your recipe has been saved',
-                newRecipe
+              error,
+              succes: false,
+              message: 'There has been an error'
             })
-        })
-        .catch(err => {
-            log.error({ err })
-            res.json({ message: 'An error occurred' })
-        })
+          })
     },
 
     upvoteRecipe(req, res){
@@ -111,7 +129,7 @@ export default {
 
             res.json({
                 succes: true,
-                message: 'Your vote het been added'
+                message: 'Jou stem is opgeslagen!'
             })
         })
         .catch(err => {
@@ -159,7 +177,7 @@ export default {
             } else {
                 res.json({
                     succes: true,
-                    message: 'The recipe has been removed'
+                    message: 'Dit recept is succesvol verwijderen'
                 })
             }
         })
